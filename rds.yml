@@ -21,6 +21,12 @@
       users:
         - CyberVault\Administrator
       set: add
+  - name: install AutoIT
+    win_package:
+      path: C:\Cyberark\packages\Privileged Session Manager\3rd Parties\AutoIt v3\autoit-v3-setup.exe
+      product_id: AutoItv3
+      state: present
+      arguments: /S
   - name: copy AutoIT
     win_copy:
       src: /tmp/test/ 
