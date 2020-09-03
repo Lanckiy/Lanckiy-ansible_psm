@@ -1,0 +1,66 @@
+---
+# file: main.yml
+
+- hosts: localhost
+  connection: local
+  vars_prompt:
+
+    - name: accept_eula
+      prompt: "Please accept EULA"
+      default: "No"
+      private: no
+
+    - name: vault_ip
+      prompt: "Please enter the Vault ip address"
+      private: no
+
+    - name: vault_password
+      prompt: "Please enter the Vault Administrator password"
+      private: yes
+
+    - name: ansible_user
+      prompt: "Please enter the Hosts administrator username"
+      default: "Administrator"
+      private: no
+
+    - name: ansible_password
+      prompt: "Please enter the Hosts Administrator password"
+      private: yes
+
+    - name: cpm_zip_file_path
+      prompt: "Please enter CPM installation package location"
+      default: "/tmp/pas_packages/cpm.zip"
+      private: no
+
+    - name: pvwa_zip_file_path
+      prompt: "Please enter PVWA installation package location"
+      default: "/tmp/pas_packages/pvwa.zip"
+      private: no
+
+    - name: psm_zip_file_path
+      prompt: "Please enter PSM installation package location"
+      default: "/tmp/pas_packages/psm.zip"
+      private: no
+
+  tasks:
+
+    - name: Set required parameters from prompt
+      include_tasks: set_facts.yml
+
+- hosts: pvwa:cpm:psm
+  strategy: free
+
+  tasks:
+
+    - include_tasks: psm.yml
+      when: "'psm' in group_names"
+
+
+# PSM Register Component Requires the First PVWA IP Address
+
+- hosts: psm
+  serial: 1
+  tasks:
+
+    - include_tasks: register_psm.yml
+      when: "'psm' in group_names"

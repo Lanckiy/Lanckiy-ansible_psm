@@ -1,0 +1,75 @@
+- hosts: psm
+  #gather_facts: yes
+  tasks:
+  - name: EditGroupMembers
+    win_group_membership:
+      name: Remote Desktop Users
+      members:
+        - PSMConnect
+        - PSMAdminConnect
+      state: absent
+  - name: edit GPO
+    win_user_right:
+      name: SeRemoteInteractiveLogonRight
+      users:
+        - PSMAdminConnect
+        - PSMConnect
+      set: remove
+  - name: edit GPO_1
+    win_user_right:
+      name: SeRemoteInteractiveLogonRight
+      users:
+        - CyberVault\Administrator
+      set: add
+  - name: copy AutoIT
+    win_copy:
+      src: /tmp/test/ 
+      dest: C:\Program Files (x86)\CyberArk\PSM\Components
+  - name: Folder Rights
+    win_acl:
+      path: C:\Program Files (x86)\CyberArk\PSM\Components
+      user: PSMShadowUsers
+      rights: FullControl
+      type: allow
+      state: present
+  - name: Folder Rights 2
+    win_acl:
+      path: C:\Program Files (x86)\CyberArk\PSM\Logs\Components
+      user: ALPHA\cab-sa-psmconnect
+      rights: CreateFiles,Write
+      type: allow
+      state: present
+      inherit: None
+      propagation: InheritOnly
+  - name: Folder Rights 3
+    win_acl:
+      path: C:\Program Files (x86)\CyberArk\PSM\Logs\Components
+      user: ALPHA\CAB-SA-PSMADM01
+      rights: CreateFiles,Write
+      type: allow
+      state: present
+      inherit: None
+      propagation: InheritOnly   
+  - name: Folder Rights 4
+    win_acl:
+      path: C:\Program Files (x86)\CyberArk\PSM\Recordings
+      user: ALPHA\cab-sa-psmconnect
+      rights: CreateFiles,Write
+      type: allow
+      state: present
+      inherit: None
+      propagation: InheritOnly
+  - name: hide hdd
+    win_regedit:
+      path: HKLM:\ANSIBLE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer
+      name: NoDrives
+      data: 44
+      type: dword
+      state: present
+      hive: C:\Users\Default\NTUSER.DAT
+ - script: /root/pas-orchestrator/tasks/scr.ps1
+  - name: CopyBat
+    win_copy:
+      src: 
+      dest: C:\Program Files (x86)\CyberArk\PSM
+  - script: /root/pas-orchestrator/tasks/scr_1.ps1

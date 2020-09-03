@@ -1,0 +1,5 @@
+---
+
+- src: https://github.com/cyberark/psm.git
+  scm: git
+  version: v11.4

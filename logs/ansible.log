@@ -1,0 +1,7 @@
+2020-09-02 10:40:27,193 p=20406 u=root |  - extracting pvwa to /tmp/pas-orchestrator/roles/pvwa
+2020-09-02 10:40:27,415 p=20406 u=root |  - pvwa (v11.4) was installed successfully
+2020-09-02 10:40:29,008 p=20406 u=root |  - extracting cpm to /tmp/pas-orchestrator/roles/cpm
+2020-09-02 10:40:29,025 p=20406 u=root |  - cpm (v11.4) was installed successfully
+2020-09-02 10:40:30,606 p=20406 u=root |  - extracting psm to /tmp/pas-orchestrator/roles/psm
+2020-09-02 10:40:30,624 p=20406 u=root |  - psm (v11.4) was installed successfully
+2020-09-03 01:54:40,817 p=1530 u=root |  - psm (v11.4) is already installed, skipping.
