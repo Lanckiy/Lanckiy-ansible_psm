@@ -1,24 +1,9 @@
 # PAS-Orchestrator
 
-In today’s modern infrastructure, organizations are moving towards hybrid environments, which consist of multiple public clouds, private clouds and on-premises platforms.
-
-CyberArk has created a tailored installation and deployment method for each platform to enable easy implementation. For example, CloudFormation templates enable easy deployment on AWS, while Azure Resource Manager (ARM) templates enable easy deployment on Azure. However, it is difficult to combine the different methods to orchestrate and automate a hybrid deployment.
-
-PAS Orchestrator is a set of Ansible roles which provides a holistic solution to deploying CyberArk Core PAS components simultaneously in multiple environments, regardless of the environment’s location.
-
-The Ansible roles are responsible for the entire deployment process, and can be integrated with the organization’s CI/CD pipeline.
-
-Each PAS component’s Ansible role is responsible for the component end-2-end deployment, which includes the following stages for each component:
-- Copy the installation package to the target server
-- Installing prerequisites
- - Silent installation of the component
-- Post installation procedure and hardening
-- Registration in the Vault
 
 Ansible Roles for PVWA, CPM and PSM can be found in the following links:
  - PSM: [https://github.com/cyberark/psm](https://github.com/cyberark/psm)
- - CPM: [https://github.com/cyberark/cpm](https://github.com/cyberark/cpm)
- - PVWA: [https://github.com/cyberark/pvwa](https://github.com/cyberark/pvwa)
+
 
 The PAS Orchestrator role is an example of how to use the component roles
 demonstrating paralel installation on multiple remote servers
@@ -96,19 +81,6 @@ Prior to running pas-orchestrator hosts file should be "updated" [https://github
 
     # file: production
     # TODO: Add description how to add hosts
-
-    [pvwa]
-    # Add here list of hosts or ip adresses of pvwa dedicated machines
-    # pvwa01.example.com
-    # pvwa02.example.com
-    10.2.0.155
-
-
-    [cpm]
-    # Add here list of hosts or ip adresses of cpm dedicated machines
-    # cpm01.example.com
-    # cpm02.example.com
-    10.2.0.155
 
 
     [psm]
